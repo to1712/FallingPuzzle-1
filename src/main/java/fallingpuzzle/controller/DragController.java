@@ -1,8 +1,5 @@
 package fallingpuzzle.controller;
 
-import java.util.List;
-
-import fallingpuzzle.model.Tile;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ObservableList;

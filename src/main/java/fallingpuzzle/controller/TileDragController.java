@@ -27,8 +27,9 @@ public class TileDragController extends DragController {
             if (cycleStatus != INACTIVE) {
             	double newX = event.getSceneX() - anchorX;
             	if( !( outSideParentBounds( target.getLayoutBounds(), target.getParent().getLayoutBounds(), target.getLayoutX() + newX ) ) &&
-            			!( collidingWithOtherTiles( target, target.getParent().getChildrenUnmodifiable(), newX ) ) )
-            		target.setTranslateX( newX );
+            			( collidingWithOtherTiles( target, target.getParent().getChildrenUnmodifiable(), newX ) ) ) //not working
+            			target.setTranslateX( newX );
+
             }
         };
         
