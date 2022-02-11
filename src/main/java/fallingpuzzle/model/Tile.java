@@ -59,6 +59,13 @@ public class Tile extends Rectangle {
 	public void setRow( Row row ) {
 		this.row = row;
 	}
+
+	public int getIndexSum() {
+		int sum = 0;
+		for( int i : indexes )
+			sum += i;
+		return sum;
+	}
 	
 	public void move( int index ) {
 		this.firstIndex.set( index );
