@@ -10,14 +10,19 @@ public class Row extends Pane {
 	
 	private Row( VBox parent ) {
 		parent.getChildren().add( this );
-		this.resize( parent.getWidth(), parent.getHeight() / 8 );		
+		this.setMinWidth( parent.getWidth() );
+		this.setMaxWidth( parent.getWidth() );
+		this.setMaxHeight( parent.getHeight() / 8 );
+		this.setMinHeight( parent.getHeight() / 8  );
+		this.setWidth( parent.getWidth() );
+		this.setHeight( parent.getHeight() / 8 );
 	}
 	
 	private Row() {}
 	
 	/* Only inserts tiles which can fit inside this row */
 	public void insert( List<Tile> tilesToInsert ) {
-		tilesToInsert.forEach( tile -> { if( !collidesWithOtherTiles( tile ) ) getChildren().add( tile ); } );
+		tilesToInsert.forEach( tile -> { if( !collidesWithOtherTiles( tile ) ) { getChildren().add( tile ); tile.setRow( this ); } } );
 		updateTilesCoords();
 	}
 	
@@ -25,17 +30,18 @@ public class Row extends Pane {
 	public void insert( Tile tileToInsert ) {
 		if( !collidesWithOtherTiles( tileToInsert ) ) {
 			getChildren().add( tileToInsert );
-			System.out.println( "newTile - values" );
-			System.out.println( "firstIndex: " + tileToInsert.getFirstIndex() );
-			System.out.println( "all idexes: " + tileToInsert.getIndexes().toString() );
-			System.out.println( "size:" + tileToInsert.getIndexes().size() );
-			System.out.println();
+			tileToInsert.setRow( this );
 		}
 		updateTilesCoords();
 	}
 	
+	public void moveTile( Tile tile, int index ) {
+		int oldIndex = tile.getFirstIndex();
+		tile.move( index );
+		if( collidesWithOtherTiles( tile ) ) tile.move( oldIndex );
+	}
 	
-	private void updateTilesCoords() {
+	public void updateTilesCoords() {
 		getChildren().forEach( node -> {
 			Tile tile = ( Tile ) node;
 			tile.setX( tile.getFirstIndex() * ( this.getWidth() / 8 ) );
@@ -47,10 +53,13 @@ public class Row extends Pane {
 		ArrayList<Integer> unavailableIndexes = new ArrayList<Integer>();
 		this.getChildren().forEach( node -> {
 			Tile tile = ( Tile ) node;
-			unavailableIndexes.addAll( tile.getIndexes() );
+			if( !tile.equals( tileToTest ) )
+				unavailableIndexes.addAll( tile.getIndexes() );
 		});
 		for( Integer i : tileToTest.getIndexes() )
-			if( unavailableIndexes.contains( i ) || i < 0 || i > 8 ) return true;
+			if( unavailableIndexes.contains( i ) || i < 0 || i > 7 ) {
+				return true;
+			}
 		return false;
 	}
 	
