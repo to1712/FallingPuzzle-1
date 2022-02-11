@@ -29,7 +29,7 @@ public class Row extends Pane {
 		updateTilesCoords();
 	}
 	
-	/* Only inserts tiles which can fit inside this row */
+	/* Only inserts a tile which can fit inside this row */
 	public void insert( Tile tileToInsert ) {
 		if( !collidesWithOtherTiles( tileToInsert ) ) {
 			getChildren().add( tileToInsert );
