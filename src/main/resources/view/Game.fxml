@@ -8,10 +8,13 @@
 
 <AnchorPane focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fallingpuzzle.controller.GameController">
    <children>
-      <AnchorPane fx:id="achBoard" blendMode="HARD_LIGHT" focusTraversable="true" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="150.0">
+      <AnchorPane fx:id="achBoard" blendMode="HARD_LIGHT" focusTraversable="true" layoutX="25.0" layoutY="95.0" prefHeight="633.0" prefWidth="543.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="105.0">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
+         <children>
+            <VBox fx:id="vboRows" alignment="BOTTOM_LEFT" fillWidth="false" focusTraversable="true" prefHeight="200.0" prefWidth="100.0" spacing="1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
       </AnchorPane>
       <Canvas fx:id="cnvGameBG" focusTraversable="true" height="800.0" mouseTransparent="true" width="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <Label fx:id="lblGameTitle" alignment="CENTER" text="Falling Puzzle" textAlignment="CENTER" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="50.0" />
