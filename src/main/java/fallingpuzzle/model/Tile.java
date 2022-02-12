@@ -71,4 +71,9 @@ public class Tile extends Rectangle {
 		this.firstIndex.set( index );
 	}
 
+	public void updateTileSize( double width, double height ) {
+		this.setWidth( width );
+		this.setHeight( height );
+	}
+
 }
