@@ -1,6 +1,10 @@
 package fallingpuzzle.controller;
 
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
 import fallingpuzzle.model.Row;
+import fallingpuzzle.model.RowMediator;
 import fallingpuzzle.model.Tile;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -17,6 +21,9 @@ public class GameController extends Controller {
 	
     @FXML
     private VBox vboRows;
+    
+    @FXML
+    private VBox vboNextRow;
 	
     @FXML
     private AnchorPane achBoard;
@@ -43,6 +50,7 @@ public class GameController extends Controller {
     }
     
     //testing stuff
+    private RowMediator rowMediator;
     private static Tile selectedTile;
     public static void updateSelectedTile( Tile newTile ) {
     	if( selectedTile != null ) { 
@@ -62,12 +70,23 @@ public class GameController extends Controller {
 
     
     @FXML
-    public void initialize() { 
+    public void initialize() {
+    	
+    	rowMediator = new RowMediator( vboRows.getChildren() );
     	
     	btnRowUp.setOnAction( new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				Row.createRow( vboRows );
+				//add row to preview vbox
+				Row.createRow( vboNextRow, rowMediator );
+				
+				//shift upper row to game vbox
+				if( vboNextRow.getChildren().size() > 1 ) {
+					Row row1 = ( Row ) vboNextRow.getChildren().get( 0 );
+					row1.setParent( vboRows );
+					vboNextRow.getChildren().remove( row1 );
+					row1.checkFallingTiles();
+				}
 			}
 		});
     	

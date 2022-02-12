@@ -12,7 +12,7 @@ public class TileGenerator {
 		while( row.getChildrenUnmodifiable().size() < 3 ) {
 			int firstIndex = random.nextInt( 8 );
 			int nCell = random.nextInt( 3 ) + 1;
-			Tile tile = new Tile( firstIndex, nCell, ( row.getWidth() / 8 ) * nCell, row.getHeight() );
+			Tile tile = new Tile( firstIndex, nCell, ( ( row.getWidth() / 8 ) * nCell ) - 2, row.getHeight() - 2 );
 			
 			if( nCell == 1 )
 				tile.setFill( Color.BLACK );
