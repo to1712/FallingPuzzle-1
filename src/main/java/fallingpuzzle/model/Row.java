@@ -8,7 +8,6 @@ import javafx.scene.layout.VBox;
 
 public class Row extends Pane {
 	
-	private VBox parent;
 	private RowMediator rowMediator;
 	
 	private Row( VBox parent, RowMediator rowMediator ) {
@@ -26,7 +25,6 @@ public class Row extends Pane {
 	}
 	
 	public void setParent( VBox parent ) {
-		this.parent = parent;
 		parent.getChildren().add( this );
 		this.setMinWidth( parent.getWidth() );
 		this.setMaxWidth( parent.getWidth() );

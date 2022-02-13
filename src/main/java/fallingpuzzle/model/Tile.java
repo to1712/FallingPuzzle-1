@@ -14,10 +14,11 @@ public class Tile extends Rectangle {
 	private IntegerProperty firstIndex;
 	private int nCell;
 	private Row row;
+	private TileSelectController tileSelectController;
 			
 	public Tile( int firstIndex, int nCell, double width, double height ) {
 		
-		new TileSelectController( this );
+		tileSelectController = new TileSelectController( this, false );
 //		new TileDragController( this );
 		this.indexes = new ArrayList<Integer>();
 		this.firstIndex = new SimpleIntegerProperty( 10 );
@@ -39,6 +40,9 @@ public class Tile extends Rectangle {
 			indexes.add( newValue.intValue() + i );		
 	}
 	
+	public void setSelectable( boolean selectable ) {
+		tileSelectController.setSelectable( selectable );
+	}
 		
 	public Tile( int firstIndex, int nCell ) {
 		this( firstIndex, nCell, 0.0, 0.0 );

@@ -1,15 +1,11 @@
 package fallingpuzzle.controller;
 
-import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
-
 import fallingpuzzle.model.Row;
 import fallingpuzzle.model.RowMediator;
 import fallingpuzzle.model.Tile;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -53,6 +49,7 @@ public class GameController extends Controller {
     private RowMediator rowMediator;
     private static Tile selectedTile;
     public static void updateSelectedTile( Tile newTile ) {
+    	    	
     	if( selectedTile != null ) { 
     		selectedTile.setWidth( selectedTile.getWidth() + 2 );
     		selectedTile.setHeight( selectedTile.getHeight() + 2 );
@@ -65,7 +62,7 @@ public class GameController extends Controller {
 		selectedTile.setHeight( selectedTile.getHeight() - 2 );
 		selectedTile.setX( selectedTile.getX() + 1 );
 		selectedTile.setY( selectedTile.getY() + 1 );
-
+			
     }
 
     
@@ -86,6 +83,7 @@ public class GameController extends Controller {
 				if( vboNextRow.getChildren().size() > 1 ) {
 					Row row1 = ( Row ) vboNextRow.getChildren().get( 0 );
 					row1.setParent( vboRows );
+					row1.getChildren().forEach(  node -> { Tile tile = ( Tile ) node; tile.setSelectable( true ); } );
 					vboNextRow.getChildren().remove( row1 );
 				}
 				

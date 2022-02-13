@@ -1,5 +1,7 @@
 package fallingpuzzle.model;
 
+import java.util.concurrent.TimeUnit;
+
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 
@@ -29,23 +31,24 @@ public class RowMediator {
 			//step 1
 			while( handleFallingTiles() ) {}
 			//step 2
-			if( handleFullRows() ) cycle = true;			 		
+			if( handleFullRows() ) cycle = true;		
+			
+			try { TimeUnit.MICROSECONDS.sleep( 50 ); } catch (InterruptedException e) { e.printStackTrace();	}
 		}
 		
 	}
 	
 	private boolean handleFallingTiles() {
 		boolean falling = false;
-		for( int i = rows.size() - 1; i > 0; --i ) {
+		for( int i = rows.size() - 2; i >= 0; --i ) {
 			Row currentRow = ( Row ) rows.get( i );
-			Row nextRow = ( Row ) rows.get( i - 1 );
+			Row nextRow = ( Row ) rows.get( i + 1 );
 			for( int j = 0; j < currentRow.getChildren().size(); ++j ) {
 				Tile tile = ( Tile ) currentRow.getChildren().get( j );
 				if( !nextRow.collidesWithOtherTiles( tile ) ) {
 					nextRow.insert( tile, false );
 					currentRow.remove( tile );
 					falling = true;
-					System.out.println("wat");
 				}
 			}
 		}
@@ -70,6 +73,10 @@ public class RowMediator {
 		rows.remove( row );
 	}
 	
-	
+	public int getRowPosition( Row row ) {
+		for( int i = 0; i < rows.size(); ++i )
+			if( rows.get( i ).equals( row ) ) return i;
+		return 0;
+	}
 
 }
