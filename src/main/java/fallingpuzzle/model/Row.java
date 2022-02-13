@@ -7,7 +7,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class Row extends Pane {
-	
+		
 	private RowMediator rowMediator;
 	
 	private Row( VBox parent, RowMediator rowMediator ) {
@@ -71,6 +71,8 @@ public class Row extends Pane {
 		}
 		else
 			rowMediator.update();
+		
+		rowMediator.requestNewRow();
 	}
 	
 	public void remove( Tile tile ) {
@@ -99,6 +101,27 @@ public class Row extends Pane {
 			}
 		return false;
 	}
+	
+	/* Checks for each tile already in if the tested one has any index in common if you try to move it */
+	public boolean collidesWithOtherTiles( Tile tileToTest, int mockFirstIndex ) {
+		ArrayList<Integer> unavailableIndexes = new ArrayList<Integer>();
+		this.getChildren().forEach( node -> {
+			Tile tile = ( Tile ) node;
+			if( !tile.equals( tileToTest ) )
+				unavailableIndexes.addAll( tile.getIndexes() );
+		});
+		
+		int trueFirstIndex = tileToTest.getFirstIndex();
+		tileToTest.move( mockFirstIndex );
+		
+		for( Integer i : tileToTest.getIndexes() )
+			if( unavailableIndexes.contains( i ) || i < 0 || i > 7 ) {
+				tileToTest.move( trueFirstIndex );
+				return true;
+			}
+		tileToTest.move( trueFirstIndex );
+		return false;
+	}
 		
 	
 	/* F method */
@@ -108,6 +131,24 @@ public class Row extends Pane {
 		tg.genTiles( row );
 		
 		return row;
+	}
+	
+	public int firstIndexBasedOnScreenPosition( double screenX ) {
+		int x = (int) Math.round( screenX );
+		
+		int res = 0;
+		
+		if( x >= 37 && x < 111 ) res = 1;
+		else if( x >= 111 && x < 185 ) res = 2;
+		else if( x >= 185 && x < 259 ) res = 3;
+		else if( x >= 259 && x < 333 ) res = 4;
+		else if( x >= 333 && x < 407 ) res = 5;
+		else if( x >= 407 && x < 481 ) res = 6;
+		else if( x >= 481 ) res = 7;
+		
+	//	System.out.println("X: " + x + " res: " + res );
+		
+		return res;
 	}
 
 }

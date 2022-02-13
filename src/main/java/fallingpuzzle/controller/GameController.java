@@ -75,6 +75,29 @@ public class GameController extends Controller {
 		selectedTile.setY( selectedTile.getY() + 1 );
 			
     }
+    
+    public void genRow() {
+    	//add row to preview vbox
+		Row.createRow( vboNextRow, rowMediator );
+		
+		//shift upper row to game vbox
+		if( vboNextRow.getChildren().size() > 1 ) {
+			Row row1 = ( Row ) vboNextRow.getChildren().get( 0 );
+			row1.setParent( vboRows );
+			//add some features to tails
+			row1.getChildren().forEach(  node -> { 
+				Tile tile = ( Tile ) node; 
+				tile.setSelectable( true ); 
+				tile.setDraggable( true ); 
+			});
+			
+			vboNextRow.getChildren().remove( row1 );
+		}
+		
+		rowMediator.update();
+		
+		if( vboRows.getChildren().size() > 10 ) vboRows.getChildren().clear();
+    }
 
     
     @FXML
@@ -85,23 +108,7 @@ public class GameController extends Controller {
     	btnRowUp.setOnAction( new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				
-				
-				//add row to preview vbox
-				Row.createRow( vboNextRow, rowMediator );
-				
-				//shift upper row to game vbox
-				if( vboNextRow.getChildren().size() > 1 ) {
-					Row row1 = ( Row ) vboNextRow.getChildren().get( 0 );
-					row1.setParent( vboRows );
-					row1.getChildren().forEach(  node -> { Tile tile = ( Tile ) node; tile.setSelectable( true ); } );
-					vboNextRow.getChildren().remove( row1 );
-				}
-				
-				rowMediator.update();
-				
-				if( vboRows.getChildren().size() > 10 ) vboRows.getChildren().clear();
-				
+				genRow();
 			}
 		});
     	

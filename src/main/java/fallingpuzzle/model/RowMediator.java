@@ -1,7 +1,5 @@
 package fallingpuzzle.model;
 
-import java.util.concurrent.TimeUnit;
-
 import fallingpuzzle.controller.GameController;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -35,18 +33,14 @@ public class RowMediator {
 		while( cycle ) {			
 			cycle = false;			
 			//step 1
-			while( handleFallingTiles() ) {}		
-			
-			
+			while( handleFallingTiles() ) {}				
 			
 			//step 2
 			if( handleFullRows() ) {
 				cycle = true;		
 				++score;
 			}
-			
 		}
-		
 		gameController.addScore( score );
 		
 	}
@@ -72,7 +66,7 @@ public class RowMediator {
 		for( int i = rows.size() - 1; i >= 0; --i ) {
 			Row currentRow = ( Row ) rows.get( i );
 			if( currentRow.isFull() ) {
-				try { TimeUnit.SECONDS.sleep( 2 ); } catch (InterruptedException e) { e.printStackTrace(); }
+			//	try { TimeUnit.SECONDS.sleep( 2 ); } catch (InterruptedException e) { e.printStackTrace(); }
 				rows.remove( currentRow );
 				return true;
 			}
@@ -88,6 +82,11 @@ public class RowMediator {
 		for( int i = 0; i < rows.size(); ++i )
 			if( rows.get( i ).equals( row ) ) return i;
 		return 0;
+	}
+
+
+	public void requestNewRow() {
+		gameController.genRow();
 	}
 
 }

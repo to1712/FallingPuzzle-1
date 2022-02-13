@@ -2,6 +2,7 @@ package fallingpuzzle.model;
 
 import java.util.ArrayList;
 
+import fallingpuzzle.controller.TileDragController;
 import fallingpuzzle.controller.TileSelectController;
 import fallingpuzzle.model.utils.IndexChangeListener;
 import javafx.beans.property.IntegerProperty;
@@ -15,13 +16,16 @@ public class Tile extends Rectangle {
 	private int nCell;
 	private Row row;
 	private TileSelectController tileSelectController;
+	private TileDragController tileDragController;
 			
 	public Tile( int firstIndex, int nCell, double width, double height ) {
 		
 		tileSelectController = new TileSelectController( this, false );
-//		new TileDragController( this );
+		tileDragController = new TileDragController( this );
+		tileDragController.isDraggableProperty().set( false );
 		this.indexes = new ArrayList<Integer>();
 		this.firstIndex = new SimpleIntegerProperty( 10 );
+		
 		
 		//Updating first index will also update indexList
 		this.firstIndex.addListener( new IndexChangeListener( this ) );
@@ -42,6 +46,10 @@ public class Tile extends Rectangle {
 	
 	public void setSelectable( boolean selectable ) {
 		tileSelectController.setSelectable( selectable );
+	}
+	
+	public void setDraggable( boolean draggable ) {
+		tileDragController.isDraggableProperty().set( draggable );
 	}
 		
 	public Tile( int firstIndex, int nCell ) {
@@ -70,6 +78,7 @@ public class Tile extends Rectangle {
 			sum += i;
 		return sum;
 	}
+
 	
 	public void move( int index ) {
 		this.firstIndex.set( index );
