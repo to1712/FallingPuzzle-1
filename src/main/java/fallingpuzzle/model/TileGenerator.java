@@ -24,7 +24,9 @@ public class TileGenerator {
 			else
 				tile.setFill( Color.BLUE );
 			
-			row.insert( tile, true );
+			
+			if( !row.isFull() )
+				row.insert( tile, true );
 		}
 	}
 	

@@ -39,13 +39,24 @@ public class GameController extends Controller {
     @FXML
     private Button btnLeft;
     
+
+    @FXML
+    private Label lblScore;
     
     
     public static Scene getScene() {
     	return getScene( "/view/Game.fxml" );
     }
     
-    //testing stuff
+    public void addScore( int score ) {
+    	int currentScore = Integer.parseInt( lblScore.getText() );
+    	currentScore += score;
+    	StringBuilder sb = new StringBuilder();
+    	sb.append( currentScore );
+    	lblScore.setText( sb.toString() );
+    }
+    
+    
     private RowMediator rowMediator;
     private static Tile selectedTile;
     public static void updateSelectedTile( Tile newTile ) {
@@ -69,7 +80,7 @@ public class GameController extends Controller {
     @FXML
     public void initialize() {
     	
-    	rowMediator = new RowMediator( vboRows.getChildren() );
+    	rowMediator = new RowMediator( vboRows.getChildren(), this );
     	
     	btnRowUp.setOnAction( new EventHandler<ActionEvent>() {
 			@Override

@@ -24,6 +24,14 @@ public class Row extends Pane {
 		return false;
 	}
 	
+	public boolean isFull() {
+		int indexSum = 0;
+		for( Node node : getChildren() )
+			indexSum += (( Tile ) node).getIndexSum();
+		if( indexSum == 28 ) return true;
+		return false;
+	}
+	
 	public void setParent( VBox parent ) {
 		parent.getChildren().add( this );
 		this.setMinWidth( parent.getWidth() );
