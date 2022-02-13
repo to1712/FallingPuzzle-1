@@ -77,6 +77,8 @@ public class GameController extends Controller {
     	btnRowUp.setOnAction( new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				
+				
 				//add row to preview vbox
 				Row.createRow( vboNextRow, rowMediator );
 				
@@ -85,8 +87,12 @@ public class GameController extends Controller {
 					Row row1 = ( Row ) vboNextRow.getChildren().get( 0 );
 					row1.setParent( vboRows );
 					vboNextRow.getChildren().remove( row1 );
-					row1.checkFallingTiles();
 				}
+				
+				rowMediator.update();
+				
+				if( vboRows.getChildren().size() >= 8 ) vboRows.getChildren().clear();
+				
 			}
 		});
     	

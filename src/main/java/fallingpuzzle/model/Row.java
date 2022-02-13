@@ -48,8 +48,8 @@ public class Row extends Pane {
 	}
 	
 	/* Only inserts a tile which can fit inside this row */
-	public void insert( Tile tileToInsert ) {
-		if( !collidesWithOtherTiles( tileToInsert ) ) {
+	public void insert( Tile tileToInsert, boolean checkForCollision ) {
+		if( !checkForCollision || !collidesWithOtherTiles( tileToInsert ) ) {
 			getChildren().add( tileToInsert );
 			tileToInsert.setRow( this );
 		}
@@ -59,13 +59,12 @@ public class Row extends Pane {
 	/* Used by controller to move a tile */
 	public void moveTile( Tile tile, int index ) {
 		int oldIndex = tile.getFirstIndex();
-		System.out.println("row index: " + rowMediator.getRowPosition( this ) );
 		tile.move( index );
 		if( collidesWithOtherTiles( tile ) ) {
 			tile.move( oldIndex );
 		}
 		else
-			rowMediator.checkFall( this );
+			rowMediator.update();
 	}
 	
 	public void remove( Tile tile ) {
@@ -94,21 +93,7 @@ public class Row extends Pane {
 			}
 		return false;
 	}
-	
-	//this deletes a row once it is completed ( WIP )
-	public void updateRow() {
-		int indexSum = 0;
-		for( Node node : getChildren() )
-			indexSum += (( Tile ) node).getIndexSum();
-		if( indexSum == 28 ) { 
-			rowMediator.removeRow( this );
-		}
-	}
-	
-	//unsure if i should create a mediator to work with all the rows at once
-	public void checkFallingTiles() {
 		
-	}
 	
 	/* F method */
 	public static Row createRow( VBox parent, RowMediator rowMediator ) {
