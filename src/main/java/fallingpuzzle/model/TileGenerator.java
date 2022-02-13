@@ -25,8 +25,11 @@ public class TileGenerator {
 				tile.setFill( Color.BLUE );
 			
 			
-			if( !row.isFull() )
-				row.insert( tile, true );
+			row.insert( tile, true );
+			
+			if( row.isFull() ) row.getChildren().clear();
+			genTiles( row );
+			
 		}
 	}
 	

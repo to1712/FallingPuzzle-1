@@ -26,9 +26,12 @@ public class Row extends Pane {
 	
 	public boolean isFull() {
 		int indexSum = 0;
-		for( Node node : getChildren() )
+		int indexCount = 0;
+		for( Node node : getChildren() ) {
 			indexSum += (( Tile ) node).getIndexSum();
-		if( indexSum == 28 ) return true;
+			indexCount += (( Tile ) node).getIndexes().size();
+		}
+		if( indexSum == 28 && indexCount == 8 ) return true;
 		return false;
 	}
 	
@@ -133,22 +136,5 @@ public class Row extends Pane {
 		return row;
 	}
 	
-	public int firstIndexBasedOnScreenPosition( double screenX ) {
-		int x = (int) Math.round( screenX );
-		
-		int res = 0;
-		
-		if( x >= 37 && x < 111 ) res = 1;
-		else if( x >= 111 && x < 185 ) res = 2;
-		else if( x >= 185 && x < 259 ) res = 3;
-		else if( x >= 259 && x < 333 ) res = 4;
-		else if( x >= 333 && x < 407 ) res = 5;
-		else if( x >= 407 && x < 481 ) res = 6;
-		else if( x >= 481 ) res = 7;
-		
-	//	System.out.println("X: " + x + " res: " + res );
-		
-		return res;
-	}
 
 }
