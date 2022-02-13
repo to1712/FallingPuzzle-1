@@ -28,10 +28,10 @@ public class Row extends Pane {
 		parent.getChildren().add( this );
 		this.setMinWidth( parent.getWidth() );
 		this.setMaxWidth( parent.getWidth() );
-		this.setMaxHeight( parent.getHeight() / 8 );
-		this.setMinHeight( parent.getHeight() / 8  );
+		this.setMaxHeight( parent.getHeight() / 10 );
+		this.setMinHeight( parent.getHeight() / 10  );
 		this.setWidth( parent.getWidth() );
-		this.setHeight( parent.getHeight() / 8 );
+		this.setHeight( parent.getHeight() / 10 );
 		for( Node node : this.getChildren() ) {
 			Tile tile = ( Tile ) node;
 			tile.updateTileSize( ( ( this.getWidth() / 8 ) * tile.getIndexes().size() ) - 2, this.getHeight() - 2 );

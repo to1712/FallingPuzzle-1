@@ -18,7 +18,7 @@ public class Application extends javafx.application.Application {
 		primaryStage.setScene( MainMenuController.getScene() );
 		primaryStage.setTitle( "Falling Puzzle" );
 		primaryStage.setWidth( 600 );
-		primaryStage.setHeight( 800 );
+		primaryStage.setHeight( 1000 );
 		primaryStage.setResizable( false );
 		primaryStage.show();
 	}

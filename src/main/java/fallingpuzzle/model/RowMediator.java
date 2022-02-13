@@ -22,18 +22,18 @@ public class RowMediator {
 	/* MAIN ALGORITHM */
 	// 1 - while -> check each row for falling tiles ( starting from bottom ) returns true
 	// 2 - if -> check for a full row ( starting from bottom )
-	// 2a true -> go to step 1
+	// 2a true -> remove it then go to step 1
 	// 2b false -> end
 	public void checkFall() {
 		boolean cycle = true;		
 		while( cycle ) {			
 			cycle = false;			
 			//step 1
-			while( handleFallingTiles() ) {}
+			while( handleFallingTiles() ) {}		
+			
 			//step 2
 			if( handleFullRows() ) cycle = true;		
 			
-			try { TimeUnit.MICROSECONDS.sleep( 50 ); } catch (InterruptedException e) { e.printStackTrace();	}
 		}
 		
 	}
@@ -62,6 +62,7 @@ public class RowMediator {
 			for( Node node : currentRow.getChildren() )
 				indexSum += (( Tile ) node).getIndexSum();
 			if( indexSum == 28 ) {
+			//	try { TimeUnit.SECONDS.sleep( 1 ); } catch (InterruptedException e) { e.printStackTrace(); }
 				rows.remove( currentRow );
 				return true;
 			}

@@ -89,7 +89,7 @@ public class GameController extends Controller {
 				
 				rowMediator.update();
 				
-				if( vboRows.getChildren().size() >= 8 ) vboRows.getChildren().clear();
+				if( vboRows.getChildren().size() > 10 ) vboRows.getChildren().clear();
 				
 			}
 		});
