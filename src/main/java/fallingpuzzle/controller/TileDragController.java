@@ -57,9 +57,10 @@ public class TileDragController extends DragController {
         		deltaIndex *= ( isTranslatePos ) ? 1 : -1;
         		oldIndex += deltaIndex;
         		
+                target.setTranslateX( 0 );
+        		
         		if( deltaIndex != 0 )
         			row.moveTile( ( Tile ) target, oldIndex );
-                target.setTranslateX( 0 );
             }
         };
         

@@ -2,7 +2,6 @@ package fallingpuzzle.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -25,13 +24,11 @@ public class Row extends Pane {
 	}
 	
 	public boolean isFull() {
-		int indexSum = 0;
 		int indexCount = 0;
-		for( Node node : getChildren() ) {
-			indexSum += (( Tile ) node).getIndexSum();
-			indexCount += (( Tile ) node).getIndexes().size();
+		for( int i = 0; i < getChildren().size(); ++i ) {
+			indexCount += (( Tile ) getChildren().get( i ) ).getIndexes().size();
 		}
-		if( indexSum == 28 && indexCount == 8 ) return true;
+		if( indexCount == 8 ) return true;
 		return false;
 	}
 	
@@ -43,16 +40,22 @@ public class Row extends Pane {
 		this.setMinHeight( parent.getHeight() / 10  );
 		this.setWidth( parent.getWidth() );
 		this.setHeight( parent.getHeight() / 10 );
-		for( Node node : this.getChildren() ) {
-			Tile tile = ( Tile ) node;
-			tile.updateTileSize( ( ( this.getWidth() / 8 ) * tile.getIndexes().size() ) - 2, this.getHeight() - 2 );
+		for( int i = 0; i< getChildren().size(); ++i ) {
+			Tile tile = ( Tile ) getChildren().get( i );
+			tile.updateTileSize( this.getWidth() / 8, this.getHeight() );
 		}
 		updateTilesCoords();
 	}
 	
 	/* Only inserts tiles which can fit inside this row */
 	public void insert( List<Tile> tilesToInsert ) {
-		tilesToInsert.forEach( tile -> { if( !collidesWithOtherTiles( tile ) ) { getChildren().add( tile ); tile.setRow( this ); } } );
+		for( int i = 0; i < tilesToInsert.size(); ++i ) {
+			Tile tile = ( Tile ) tilesToInsert.get( i );
+			if( !collidesWithOtherTiles( tile ) ) { 
+				getChildren().add( tile ); 
+				tile.setRow( this ); 
+			} 
+		}
 		updateTilesCoords();
 	}
 	
@@ -72,10 +75,11 @@ public class Row extends Pane {
 		if( collidesWithOtherTiles( tile ) ) {
 			tile.move( oldIndex );
 		}
-		else
+		else {
 			rowMediator.update();
+		//	rowMediator.requestNewRow();
+		}
 		
-		rowMediator.requestNewRow();
 	}
 	
 	public void remove( Tile tile ) {
@@ -84,22 +88,22 @@ public class Row extends Pane {
 	
 	/* Updates tile's X for it to be correctly displayed on screen */
 	public void updateTilesCoords() {
-		getChildren().forEach( node -> {
-			Tile tile = ( Tile ) node;
+		for( int i = 0; i < getChildren().size(); ++i ) {
+			Tile tile = ( Tile ) getChildren().get( i );
 			tile.setX( tile.getFirstIndex() * ( this.getWidth() / 8 ) );
-		} );
+		}
 	}
 	
 	/* Checks for each tile already in if the tested one has any index in common */
 	public boolean collidesWithOtherTiles( Tile tileToTest ) {
 		ArrayList<Integer> unavailableIndexes = new ArrayList<Integer>();
-		this.getChildren().forEach( node -> {
-			Tile tile = ( Tile ) node;
+		for( int i = 0; i < getChildren().size(); ++i ) {
+			Tile tile = ( Tile ) getChildren().get( i );
 			if( !tile.equals( tileToTest ) )
 				unavailableIndexes.addAll( tile.getIndexes() );
-		});
-		for( Integer i : tileToTest.getIndexes() )
-			if( unavailableIndexes.contains( i ) || i < 0 || i > 7 ) {
+		}
+		for( int i = 0; i < tileToTest.getIndexes().size(); ++i )
+			if( unavailableIndexes.contains( tileToTest.getIndexes().get( i ) ) || i < 0 || i > 7 ) {
 				return true;
 			}
 		return false;
@@ -108,17 +112,17 @@ public class Row extends Pane {
 	/* Checks for each tile already in if the tested one has any index in common if you try to move it */
 	public boolean collidesWithOtherTiles( Tile tileToTest, int mockFirstIndex ) {
 		ArrayList<Integer> unavailableIndexes = new ArrayList<Integer>();
-		this.getChildren().forEach( node -> {
-			Tile tile = ( Tile ) node;
+		for( int i = 0; i < getChildren().size(); ++i ) {
+			Tile tile = ( Tile ) getChildren().get( i );
 			if( !tile.equals( tileToTest ) )
 				unavailableIndexes.addAll( tile.getIndexes() );
-		});
+		}
 		
 		int trueFirstIndex = tileToTest.getFirstIndex();
 		tileToTest.move( mockFirstIndex );
 		
-		for( Integer i : tileToTest.getIndexes() )
-			if( unavailableIndexes.contains( i ) || i < 0 || i > 7 ) {
+		for( int i = 0; i < tileToTest.getIndexes().size(); ++i )
+			if( unavailableIndexes.contains( tileToTest.getIndexes().get( i ) ) || i < 0 || i > 7 ) {
 				tileToTest.move( trueFirstIndex );
 				return true;
 			}

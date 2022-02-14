@@ -14,12 +14,20 @@ public class TileGenerator {
 		
 		while( row.getChildrenUnmodifiable().size() < 3 ) {
 			int firstIndex = random.nextInt( 8 );
-			int nCell = random.nextInt( 3 ) + 1;
-			Tile tile = new Tile( firstIndex, nCell, ( ( row.getWidth() / 8 ) * nCell ) - 2, tileHeight - 2 );
+			int nCell = 0;
 			
-			if( nCell == 1 )
+			nCell = random.nextInt( 3 ) + 1;
+									
+			Tile tile = new Tile( firstIndex, nCell, row.getWidth() / 8, tileHeight );
+			
+			while( true ) {
+				if( tile.getIndexes().get( tile.getNCell() - 1 ) < 8 ) break;
+				tile.setNCell( random.nextInt( 3 ) + 1 );
+			}
+			
+			if( tile.getNCell() == 1 )
 				tile.setFill( Color.BLACK );
-			else if( nCell == 2 )
+			else if( tile.getNCell()  == 2 )
 				tile.setFill( Color.RED );
 			else
 				tile.setFill( Color.BLUE );

@@ -69,6 +69,8 @@ public class GameController extends Controller {
     	}   	
     	selectedTile = newTile;
     	
+    	System.out.println( selectedTile.getIndexes().toString() );
+    	
 		selectedTile.setWidth( selectedTile.getWidth() - 2 );
 		selectedTile.setHeight( selectedTile.getHeight() - 2 );
 		selectedTile.setX( selectedTile.getX() + 1 );
@@ -85,11 +87,11 @@ public class GameController extends Controller {
 			Row row1 = ( Row ) vboNextRow.getChildren().get( 0 );
 			row1.setParent( vboRows );
 			//add some features to tails
-			row1.getChildren().forEach(  node -> { 
-				Tile tile = ( Tile ) node; 
+			for( int i = 0; i < row1.getChildren().size(); ++i ) { 
+				Tile tile = ( Tile ) row1.getChildren().get( i ); 
 				tile.setSelectable( true ); 
 				tile.setDraggable( true ); 
-			});
+			}
 			
 			vboNextRow.getChildren().remove( row1 );
 		}

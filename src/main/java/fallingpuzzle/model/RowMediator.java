@@ -42,7 +42,7 @@ public class RowMediator {
 			}
 		}
 		gameController.addScore( score );
-		
+				
 	}
 	
 	private boolean handleFallingTiles() {
