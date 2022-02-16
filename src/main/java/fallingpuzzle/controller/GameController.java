@@ -39,7 +39,6 @@ public class GameController extends Controller {
     @FXML
     private Button btnLeft;
     
-
     @FXML
     private Label lblScore;
     
