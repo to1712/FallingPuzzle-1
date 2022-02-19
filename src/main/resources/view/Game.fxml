@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.canvas.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fallingpuzzle.controller.GameController">
+<AnchorPane focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fallingpuzzle.controller.GameController">
    <children>
-      <AnchorPane fx:id="achBoard" blendMode="HARD_LIGHT" focusTraversable="true" layoutX="28.0" layoutY="95.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="692.0" prefWidth="544.0">
+      <AnchorPane fx:id="achBoard" blendMode="HARD_LIGHT" focusTraversable="true" layoutX="28.0" layoutY="95.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="692.0" prefWidth="544.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="95.0">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
          <children>
-            <VBox fx:id="vboRows" alignment="BOTTOM_LEFT" fillWidth="false" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="592.0" prefWidth="544.0" spacing="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <VBox fx:id="vboNextRow" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="74.0" prefWidth="544.0" snapToPixel="false" spacing="1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+            <VBox fx:id="vboRows" alignment="BOTTOM_CENTER" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0" />
+            <VBox fx:id="vboNextRow" alignment="BASELINE_CENTER" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" snapToPixel="false" spacing="1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="812.0" />
          </children>
       </AnchorPane>
       <Canvas fx:id="cnvGameBG" focusTraversable="true" height="800.0" mouseTransparent="true" width="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
@@ -22,5 +23,15 @@
       <Button fx:id="btnRowUp" layoutX="25.0" layoutY="25.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="86.0" text="Row UP" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="25.0" />
       <Button fx:id="btnLeft" layoutX="456.0" layoutY="28.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="59.0" text="&lt;" />
       <Button fx:id="btnRight" layoutX="516.0" layoutY="28.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="59.0" text="&gt;" />
+      <Label fx:id="lblScore" layoutX="186.0" layoutY="36.0" text="0">
+         <font>
+            <Font name="Elephant" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="125.0" layoutY="36.0" text="Score">
+         <font>
+            <Font name="Elephant" size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

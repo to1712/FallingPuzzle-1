@@ -2,6 +2,7 @@ package fallingpuzzle.model;
 
 import java.util.ArrayList;
 
+import fallingpuzzle.controller.TileDragController;
 import fallingpuzzle.controller.TileSelectController;
 import fallingpuzzle.model.utils.IndexChangeListener;
 import javafx.beans.property.IntegerProperty;
@@ -14,21 +15,28 @@ public class Tile extends Rectangle {
 	private IntegerProperty firstIndex;
 	private int nCell;
 	private Row row;
+	private TileSelectController tileSelectController;
+	private TileDragController tileDragController;
+	private double baseWidth = 0;
+	private double baseHeight = 0;
 			
-	public Tile( int firstIndex, int nCell, double width, double height ) {
+	public Tile( int firstIndex, int nCell, double baseWidth, double baseHeight ) {
 		
-		new TileSelectController( this );
-//		new TileDragController( this );
+		tileSelectController = new TileSelectController( this, false );
+		tileDragController = new TileDragController( this );
+		tileDragController.isDraggableProperty().set( false );
 		this.indexes = new ArrayList<Integer>();
 		this.firstIndex = new SimpleIntegerProperty( 10 );
+		
 		
 		//Updating first index will also update indexList
 		this.firstIndex.addListener( new IndexChangeListener( this ) );
 		
-		
 		this.nCell = nCell;
-		this.setWidth( width );
-		this.setHeight( height );
+		this.baseHeight = baseHeight;
+		this.baseWidth = baseWidth;
+		resize();
+		
 		this.firstIndex.set( firstIndex );
 	}
 	
@@ -39,6 +47,23 @@ public class Tile extends Rectangle {
 			indexes.add( newValue.intValue() + i );		
 	}
 	
+	public int getNCell() {
+		return nCell;
+	}
+	
+	public void setNCell( int nCell ) {
+		this.nCell = nCell;
+		updateIndexes( firstIndex.getValue() );
+		resize();
+	}
+	
+	public void setSelectable( boolean selectable ) {
+		tileSelectController.setSelectable( selectable );
+	}
+	
+	public void setDraggable( boolean draggable ) {
+		tileDragController.isDraggableProperty().set( draggable );
+	}
 		
 	public Tile( int firstIndex, int nCell ) {
 		this( firstIndex, nCell, 0.0, 0.0 );
@@ -59,21 +84,20 @@ public class Tile extends Rectangle {
 	public void setRow( Row row ) {
 		this.row = row;
 	}
-
-	public int getIndexSum() {
-		int sum = 0;
-		for( int i : indexes )
-			sum += i;
-		return sum;
-	}
 	
 	public void move( int index ) {
 		this.firstIndex.set( index );
 	}
+	
+	private void resize() {
+		this.setWidth( ( baseWidth * nCell ) - 2 );
+		this.setHeight( baseHeight - 2 );
+	}
 
-	public void updateTileSize( double width, double height ) {
-		this.setWidth( width );
-		this.setHeight( height );
+	public void updateTileSize( double baseWidth, double baseHeight ) {
+		this.baseWidth = baseWidth;
+		this.baseHeight = baseHeight;
+		resize();
 	}
 
 }
