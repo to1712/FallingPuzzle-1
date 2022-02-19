@@ -1,12 +1,9 @@
 package fallingpuzzle.controller;
 
 import java.io.File;
-import java.io.IOException;
-
 import fallingpuzzle.Application;
 import fallingpuzzle.controller.data.Setting;
 import fallingpuzzle.controller.data.SettingsDAO;
-import fallingpuzzle.controller.ia.DLVController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;

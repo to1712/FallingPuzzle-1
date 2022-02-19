@@ -1,9 +1,6 @@
 package fallingpuzzle.controller;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-
 import fallingpuzzle.controller.ia.DLVController;
 import fallingpuzzle.controller.ia.DLVFileBuilder;
 import fallingpuzzle.model.Row;

@@ -20,6 +20,7 @@ public class DLVFileBuilder {
 	public void createFile( ObservableList<Node> rows ) {
 		try {
 			file = File.createTempFile( "file", null );
+			@SuppressWarnings("resource")
 			OutputStreamWriter ow = new OutputStreamWriter( new FileOutputStream( file ) );
 			ow.write( createProgram( rows ) );
 			ow.flush();
