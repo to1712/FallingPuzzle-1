@@ -77,7 +77,7 @@ public class Row extends Pane {
 		}
 		else {
 			rowMediator.update();
-		//	rowMediator.requestNewRow();
+			rowMediator.requestNewRow();
 		}
 		
 	}

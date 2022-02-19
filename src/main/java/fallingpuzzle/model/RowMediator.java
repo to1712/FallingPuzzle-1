@@ -87,6 +87,7 @@ public class RowMediator {
 
 	public void requestNewRow() {
 		gameController.genRow();
+		update();
 	}
 
 }

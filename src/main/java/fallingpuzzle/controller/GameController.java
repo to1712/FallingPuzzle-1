@@ -68,7 +68,7 @@ public class GameController extends Controller {
     	}   	
     	selectedTile = newTile;
     	
-    	System.out.println( selectedTile.getIndexes().toString() );
+ //   	System.out.println( selectedTile.getIndexes().toString() );
     	
 		selectedTile.setWidth( selectedTile.getWidth() - 2 );
 		selectedTile.setHeight( selectedTile.getHeight() - 2 );
@@ -95,8 +95,6 @@ public class GameController extends Controller {
 			vboNextRow.getChildren().remove( row1 );
 		}
 		
-		rowMediator.update();
-		
 		if( vboRows.getChildren().size() > 10 ) vboRows.getChildren().clear();
     }
 
@@ -110,6 +108,7 @@ public class GameController extends Controller {
 			@Override
 			public void handle(ActionEvent event) {
 				genRow();
+				rowMediator.update();
 			}
 		});
     	
