@@ -68,17 +68,6 @@ public class MainMenuController extends Controller {
             }
         }); 
     	
-    	btnDLVTry.setOnAction(new EventHandler<ActionEvent>() {
-	        @Override
-	        public void handle(ActionEvent event) {
-	        	try {
-	        		String program = txaDVLTry.getText();
-					DLVController.start( program );
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-	        }
-    	}); 
     }
        
     

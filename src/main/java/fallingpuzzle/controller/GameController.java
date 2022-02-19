@@ -1,5 +1,11 @@
 package fallingpuzzle.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+
+import fallingpuzzle.controller.ia.DLVController;
+import fallingpuzzle.controller.ia.DLVFileBuilder;
 import fallingpuzzle.model.Row;
 import fallingpuzzle.model.RowMediator;
 import fallingpuzzle.model.Tile;
@@ -77,6 +83,14 @@ public class GameController extends Controller {
 			
     }
     
+    public void genDLVFile() {
+		DLVFileBuilder dlvFileBuilder = new DLVFileBuilder();
+		dlvFileBuilder.createFile( vboRows.getChildren() );
+		File file = dlvFileBuilder.getFile();
+		DLVController.start( file );
+		file.delete();
+    }
+    
     public void genRow() {
     	//add row to preview vbox
 		Row.createRow( vboNextRow, rowMediator );
@@ -109,6 +123,7 @@ public class GameController extends Controller {
 			public void handle(ActionEvent event) {
 				genRow();
 				rowMediator.update();
+				genDLVFile();
 			}
 		});
     	
