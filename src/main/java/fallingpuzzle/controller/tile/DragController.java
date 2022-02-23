@@ -1,4 +1,4 @@
-package fallingpuzzle.controller;
+package fallingpuzzle.controller.tile;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;

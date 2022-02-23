@@ -1,6 +1,6 @@
 package fallingpuzzle;
 
-import fallingpuzzle.controller.MainMenuController;
+import fallingpuzzle.controller.scene.MainMenuController;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 

@@ -1,5 +1,6 @@
-package fallingpuzzle.controller;
+package fallingpuzzle.controller.tile;
 
+import fallingpuzzle.controller.scene.GameController;
 import fallingpuzzle.model.Tile;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;

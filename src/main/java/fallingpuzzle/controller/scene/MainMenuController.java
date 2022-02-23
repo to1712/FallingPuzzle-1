@@ -1,12 +1,10 @@
-package fallingpuzzle.controller;
+package fallingpuzzle.controller.scene;
 
 import java.io.File;
-import java.io.IOException;
-
 import fallingpuzzle.Application;
+import fallingpuzzle.controller.Controller;
 import fallingpuzzle.controller.data.Setting;
 import fallingpuzzle.controller.data.SettingsDAO;
-import fallingpuzzle.controller.ia.DLVController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -29,10 +27,6 @@ public class MainMenuController extends Controller {
     private Button btnDLVPATH;
     @FXML
     private Canvas cnvMenuBG;
-    @FXML
-    private Button btnDLVTry;
-    @FXML
-    private TextArea txaDVLTry;
     
     public static Scene getScene() {
     	scene = getScene("/view/MainMenu.fxml");
@@ -68,17 +62,6 @@ public class MainMenuController extends Controller {
             }
         }); 
     	
-    	btnDLVTry.setOnAction(new EventHandler<ActionEvent>() {
-	        @Override
-	        public void handle(ActionEvent event) {
-	        	try {
-	        		String program = txaDVLTry.getText();
-					DLVController.start( program );
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-	        }
-    	}); 
     }
        
     

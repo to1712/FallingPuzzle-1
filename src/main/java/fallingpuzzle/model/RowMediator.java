@@ -1,6 +1,6 @@
 package fallingpuzzle.model;
 
-import fallingpuzzle.controller.GameController;
+import fallingpuzzle.controller.scene.GameController;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 

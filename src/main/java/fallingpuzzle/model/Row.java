@@ -1,6 +1,7 @@
 package fallingpuzzle.model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -71,6 +72,7 @@ public class Row extends Pane {
 	/* Used by controller to move a tile */
 	public void moveTile( Tile tile, int index ) {
 		int oldIndex = tile.getFirstIndex();
+		if( tilesInBeetween( tile, index ) ) return;
 		tile.move( index );
 		if( collidesWithOtherTiles( tile ) ) {
 			tile.move( oldIndex );
@@ -79,7 +81,36 @@ public class Row extends Pane {
 			rowMediator.update();
 			rowMediator.requestNewRow();
 		}
+	}
 		
+	//if unavailable indexes contains any index in between mock and real return false;
+	public boolean tilesInBeetween( Tile tileToTest, int mockIndex ) {	
+		ArrayList<Integer> unavailableIndexes = new ArrayList<Integer>();
+		int realIndex = tileToTest.getFirstIndex();
+		for( int i = 0; i < getChildren().size(); ++i ) {
+			Tile tile = ( Tile ) getChildren().get( i );
+			if( !tile.equals( tileToTest ) )
+				unavailableIndexes.addAll( tile.getIndexes() );
+		}
+		unavailableIndexes.sort( new Comparator<Integer>() {
+			@Override
+			public int compare(Integer o1, Integer o2) {
+				int res = ( o1 > o2 ) ? o1 : o2;
+				return res;
+			}
+		});	
+		//case mockIndex < realIndex -> test mockIndex + tile size + 1
+		if( mockIndex < realIndex )
+			for( int i = mockIndex + tileToTest.getIndexes().size() + 1; i < realIndex; ++i ) {
+				if( unavailableIndexes.contains( i ) ) return true;
+			}
+		//case mockIndex > realIndex -> test realIndex + 1
+		else if( mockIndex > realIndex )	
+			for( int i = realIndex + 1; i < mockIndex; ++i ) {
+				if( unavailableIndexes.contains( i ) ) return true;
+			}
+		
+		return false;
 	}
 	
 	public void remove( Tile tile ) {
@@ -102,6 +133,7 @@ public class Row extends Pane {
 			if( !tile.equals( tileToTest ) )
 				unavailableIndexes.addAll( tile.getIndexes() );
 		}
+				
 		for( int i = 0; i < tileToTest.getIndexes().size(); ++i )
 			if( unavailableIndexes.contains( tileToTest.getIndexes().get( i ) ) || i < 0 || i > 7 ) {
 				return true;
@@ -120,7 +152,7 @@ public class Row extends Pane {
 		
 		int trueFirstIndex = tileToTest.getFirstIndex();
 		tileToTest.move( mockFirstIndex );
-		
+				
 		for( int i = 0; i < tileToTest.getIndexes().size(); ++i )
 			if( unavailableIndexes.contains( tileToTest.getIndexes().get( i ) ) || i < 0 || i > 7 ) {
 				tileToTest.move( trueFirstIndex );
@@ -138,7 +170,7 @@ public class Row extends Pane {
 		tg.genTiles( row );
 		
 		return row;
-	}
+	}	
 	
-
 }
+

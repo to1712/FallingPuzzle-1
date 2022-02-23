@@ -2,8 +2,8 @@ package fallingpuzzle.model;
 
 import java.util.ArrayList;
 
-import fallingpuzzle.controller.TileDragController;
-import fallingpuzzle.controller.TileSelectController;
+import fallingpuzzle.controller.tile.TileDragController;
+import fallingpuzzle.controller.tile.TileSelectController;
 import fallingpuzzle.model.utils.IndexChangeListener;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;

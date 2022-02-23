@@ -1,5 +1,10 @@
-package fallingpuzzle.controller;
+package fallingpuzzle.controller.scene;
 
+import java.io.File;
+
+import fallingpuzzle.controller.Controller;
+import fallingpuzzle.controller.ia.DLVController;
+import fallingpuzzle.controller.ia.DLVFileBuilder;
 import fallingpuzzle.model.Row;
 import fallingpuzzle.model.RowMediator;
 import fallingpuzzle.model.Tile;
@@ -57,6 +62,7 @@ public class GameController extends Controller {
     
     
     private RowMediator rowMediator;
+    private DLVController dlvController;
     private static Tile selectedTile;
     public static void updateSelectedTile( Tile newTile ) {
     	    	
@@ -75,6 +81,14 @@ public class GameController extends Controller {
 		selectedTile.setX( selectedTile.getX() + 1 );
 		selectedTile.setY( selectedTile.getY() + 1 );
 			
+    }
+    
+    public void genDLVFile() {
+		DLVFileBuilder dlvFileBuilder = new DLVFileBuilder();
+		dlvFileBuilder.createFile( vboRows.getChildren() );
+		File file = dlvFileBuilder.getFile();
+		dlvController.start( file );
+		file.delete();
     }
     
     public void genRow() {
@@ -103,12 +117,14 @@ public class GameController extends Controller {
     public void initialize() {
     	
     	rowMediator = new RowMediator( vboRows.getChildren(), this );
+    	dlvController = new DLVController( this );
     	
     	btnRowUp.setOnAction( new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				genRow();
 				rowMediator.update();
+				genDLVFile();
 			}
 		});
     	
