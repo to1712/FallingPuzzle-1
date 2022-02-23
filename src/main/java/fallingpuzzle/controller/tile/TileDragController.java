@@ -1,4 +1,4 @@
-package fallingpuzzle.controller;
+package fallingpuzzle.controller.tile;
 
 import fallingpuzzle.model.Row;
 import fallingpuzzle.model.Tile;

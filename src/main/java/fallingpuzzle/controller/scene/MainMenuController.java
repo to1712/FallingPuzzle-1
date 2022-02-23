@@ -1,7 +1,8 @@
-package fallingpuzzle.controller;
+package fallingpuzzle.controller.scene;
 
 import java.io.File;
 import fallingpuzzle.Application;
+import fallingpuzzle.controller.Controller;
 import fallingpuzzle.controller.data.Setting;
 import fallingpuzzle.controller.data.SettingsDAO;
 import javafx.event.ActionEvent;
@@ -26,10 +27,6 @@ public class MainMenuController extends Controller {
     private Button btnDLVPATH;
     @FXML
     private Canvas cnvMenuBG;
-    @FXML
-    private Button btnDLVTry;
-    @FXML
-    private TextArea txaDVLTry;
     
     public static Scene getScene() {
     	scene = getScene("/view/MainMenu.fxml");
