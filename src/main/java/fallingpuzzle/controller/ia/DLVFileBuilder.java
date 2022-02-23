@@ -61,12 +61,12 @@ public class DLVFileBuilder {
 	
 	//Create tileSize rule
 	private String createTileSizeRule() {
-		return "\ntileSize( X, Size, R ):- tile( X, Y, R ), #count{ X, I : tile( X, I, R ) } = Size.";
+		return "\n" + "tileSize( X, Size, R ):- tile( X, Y, R ), #count{ X, I : tile( X, I, R ) } = Size.";
 	}
 	
-	//Create tailFall rule
+	//Create tailFall rule <-- TODO
 	private String createTileFallRule() {
-		return "\n";
+		return "\n" + "";
 	}
 	
 }
