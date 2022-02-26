@@ -76,6 +76,7 @@ public class Row extends Pane {
 		tile.move( index );
 		if( collidesWithOtherTiles( tile ) ) {
 			tile.move( oldIndex );
+			System.out.println("illegal move");
 		}
 		else {
 			rowMediator.update();
@@ -161,7 +162,18 @@ public class Row extends Pane {
 		tileToTest.move( trueFirstIndex );
 		return false;
 	}
-		
+	
+	
+	/* get Tile by Index */
+	public Tile getTile( int index ) {
+		for( int i = 0; i < getChildren().size(); ++i ) {
+			Tile tile = ( Tile ) getChildren().get( i );
+			if( tile.getFirstIndex() == index ) {
+				return tile;
+			}
+		}
+			return null;
+	}
 	
 	/* F method */
 	public static Row createRow( VBox parent, RowMediator rowMediator ) {

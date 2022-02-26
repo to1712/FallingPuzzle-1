@@ -39,10 +39,7 @@ public class GameController extends Controller {
     private Button btnRowUp;
     
     @FXML
-    private Button btnRight;
-    
-    @FXML
-    private Button btnLeft;
+    private Button btnIa;
     
     @FXML
     private Label lblScore;
@@ -61,9 +58,14 @@ public class GameController extends Controller {
     }
     
     
+    public Row getRow( int rowIndex ) {
+    	return ( Row ) vboRows.getChildren().get( rowIndex );
+    }
+    
     private RowMediator rowMediator;
     private DLVController dlvController;
     private static Tile selectedTile;
+    private boolean aiOn = false;
     public static void updateSelectedTile( Tile newTile ) {
     	    	
     	if( selectedTile != null ) { 
@@ -110,6 +112,8 @@ public class GameController extends Controller {
 		}
 		
 		if( vboRows.getChildren().size() > 10 ) vboRows.getChildren().clear();
+		if( aiOn )
+			genDLVFile();
     }
 
     
@@ -124,26 +128,17 @@ public class GameController extends Controller {
 			public void handle(ActionEvent event) {
 				genRow();
 				rowMediator.update();
-				genDLVFile();
 			}
 		});
     	
-    	btnLeft.setOnAction( new EventHandler<ActionEvent>() {
+    	btnIa.setOnAction( new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				if( selectedTile == null ) return;
-				selectedTile.getRow().moveTile( selectedTile, selectedTile.getFirstIndex() - 1 );
+				aiOn = ( aiOn ) ? false : true;
 			}
 		});
-    	
-    	btnRight.setOnAction( new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				if( selectedTile == null ) return;
-				selectedTile.getRow().moveTile( selectedTile, selectedTile.getFirstIndex() + 1 );
-			}
-		});
-    	
+
+    	    	
     }
 
     
