@@ -52,7 +52,7 @@ public class DLVFileBuilder {
 		sb.append( createStrongConstraints() );
 		
 		//QUERY
-		sb.append( createQuery() );
+	//	sb.append( createQuery() );
 		
 		
 		return sb.toString();
@@ -110,9 +110,18 @@ public class DLVFileBuilder {
 	private String createStrongConstraints() {
 		StringBuilder sb = new StringBuilder();
 		sb.append( "\n" + "nTileMoves( S ):- #count{ X, Y, R : tileMove( X, Y, R ) } = S." );
-		sb.append( "\n" + ":- nTileMoves( S ), S != 1." ); //shall be only 1 move
+		sb.append( "\n" + ":- nTileMoves( S ), S != 1." ); //shall be 1 move
 		
-		sb.append( "\n" + ":- tileMove( X, Y, R ), occupiedIndexes( I, R ), Y == R, Y == K.");
+		sb.append( "\n" + ":- tileMove( X, Y, R )," //no tiles in between oldIndex and newIndex 
+				+ " tile( Z, K, R ),"
+				+ " tileSize( X, S, R ),"
+				+ " Z != X,"
+				+ " M = Y + S,"
+				+ " K > X,"
+				+ " K < M."); 
+		
+		
+		
 		
 		return sb.toString();
 	}

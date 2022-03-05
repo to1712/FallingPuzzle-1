@@ -70,17 +70,18 @@ public class Row extends Pane {
 	}
 	
 	/* Used by controller to move a tile */
-	public void moveTile( Tile tile, int index ) {
+	public boolean moveTile( Tile tile, int index ) {
 		int oldIndex = tile.getFirstIndex();
-		if( tilesInBeetween( tile, index ) ) return;
+		if( tilesInBeetween( tile, index ) ) return false;
 		tile.move( index );
 		if( collidesWithOtherTiles( tile ) ) {
 			tile.move( oldIndex );
 			System.out.println("illegal move");
+			return false;
 		}
 		else {
-			rowMediator.update();
-			rowMediator.requestNewRow();
+			System.out.println( "row: " + rowMediator.getRowPosition( this ) + " move is: " + oldIndex + " to " + index );
+			return true;
 		}
 	}
 		
