@@ -3,19 +3,22 @@ package fallingpuzzle.model;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import fallingpuzzle.controller.scene.GameController;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class Row extends Pane {
 		
-	private RowMediator rowMediator;
+	private GameController gameController;
 	
-	private Row( VBox parent, RowMediator rowMediator ) {
-		setParent( parent );
-		this.rowMediator = rowMediator;
+	public Row() {
+		System.out.println("HEEEEEEELP");
 	}
 	
-	private Row() {}
+	public void setController( GameController gameController ) {
+		this.gameController = gameController;
+	}
 	
 	@Override
 	public boolean equals( Object row ) {
@@ -80,7 +83,7 @@ public class Row extends Pane {
 			return false;
 		}
 		else {
-			System.out.println( "row: " + rowMediator.getRowPosition( this ) + " move is: " + oldIndex + " to " + index );
+			System.out.println( "row: " + gameController.getRowPosition( this ) + " move is: " + oldIndex + " to " + index );
 			return true;
 		}
 	}
@@ -164,6 +167,9 @@ public class Row extends Pane {
 		return false;
 	}
 	
+	public GameController getGameController() {
+		return gameController;
+	}
 	
 	/* get Tile by Index */
 	public Tile getTile( int index ) {
@@ -176,14 +182,6 @@ public class Row extends Pane {
 			return null;
 	}
 	
-	/* F method */
-	public static Row createRow( VBox parent, RowMediator rowMediator ) {
-		Row row = new Row( parent, rowMediator );
-		TileGenerator tg = new TileGenerator();
-		tg.genTiles( row );
-		
-		return row;
-	}	
 	
 }
 
