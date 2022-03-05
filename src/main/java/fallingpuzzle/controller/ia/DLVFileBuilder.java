@@ -120,7 +120,8 @@ public class DLVFileBuilder {
 				+ " K > X,"
 				+ " K < M."); 
 		
-		
+		sb.append( "\n" + ":- tileMove( X, Y, R ),"
+						+ " tile( Y, _, R )." );
 		
 		
 		return sb.toString();

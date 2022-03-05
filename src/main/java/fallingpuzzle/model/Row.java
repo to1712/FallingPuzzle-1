@@ -12,9 +12,7 @@ public class Row extends Pane {
 		
 	private GameController gameController;
 	
-	public Row() {
-		System.out.println("HEEEEEEELP");
-	}
+	public Row() {}
 	
 	public void setController( GameController gameController ) {
 		this.gameController = gameController;
@@ -79,7 +77,8 @@ public class Row extends Pane {
 		tile.move( index );
 		if( collidesWithOtherTiles( tile ) ) {
 			tile.move( oldIndex );
-			System.out.println("illegal move");
+			System.out.println("illegal move ");
+			System.out.println( "row: " + gameController.getRowPosition( this ) + " move is: " + oldIndex + " to " + index );
 			return false;
 		}
 		else {

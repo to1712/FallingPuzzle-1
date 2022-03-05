@@ -19,18 +19,16 @@ public class AIService extends Service<Void> {
 	@Override
 	protected Task<Void> createTask() {
 		
-//		Thread.currentThread().setDaemon( true );
-		
 		return new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
-				System.out.println("SADASDS");
+				System.out.println("AI RUNNING:");
 				while( rmiRunAi.isSelected() ) {
 					if( !gameController.isReady() ) continue;
 				Platform.runLater( () -> { gameController.genDLVFile(); } );
 					Thread.sleep( 1000 );
 				}
-				System.out.println("OUT");
+				System.out.println("AI STOP");
 				return null;
 			}
 		};

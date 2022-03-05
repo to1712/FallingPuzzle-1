@@ -128,8 +128,14 @@ public class GameController extends Controller {
     	mniRowUp.setOnAction( rowUp ); 
 
     	iASwitch = event -> {
-    		if( !rmiRunAi.isSelected() ) return;
+    		if( !rmiRunAi.isSelected() ) {
+    			mniRowUp.setDisable( false );
+    			mniInitBoard.setDisable( false );
+    			return;
+    		}
     		AiCycle.restart();
+			mniRowUp.setDisable( true );
+			mniInitBoard.setDisable( true );
     	};
     	rmiRunAi.setOnAction( iASwitch );
     	
