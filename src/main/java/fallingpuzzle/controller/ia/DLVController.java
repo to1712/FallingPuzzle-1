@@ -2,7 +2,6 @@ package fallingpuzzle.controller.ia;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
@@ -20,7 +19,6 @@ public class DLVController {
 		this.gameController = gameController;
 	}
 	
-	@SuppressWarnings("resource")
 	public Pair<Tile, Integer> start( File file ) {
 		Pair<Tile, Integer> tileMove = null;
 		Runtime rt = Runtime.getRuntime();
@@ -32,26 +30,12 @@ public class DLVController {
 			BufferedReader stdInput = new BufferedReader(new 
 			     InputStreamReader(proc.getInputStream(), Charset.defaultCharset()));
 
-			BufferedReader stdError = new BufferedReader(new 
-			     InputStreamReader(proc.getErrorStream(), Charset.defaultCharset()));
+			tileMove = processOutput( stdInput );
 			
-			// Read the output from the command
-			String s = null;
-			boolean error = false;			
-			while ((s = stdError.readLine()) != null) {
-				
-				System.out.println("dlv error: ");
-			    System.out.println(s);
-			    error = true;
-			    FileInputStream fi = new FileInputStream( file );
-			    BufferedReader br = new BufferedReader( new InputStreamReader( fi ) );
-			    String k = null;
-			    while( ( k = br.readLine() ) != null ) System.out.println( k );
-			    break;
-			    
-			}
-			if( !error ) tileMove = processOutput( stdInput );
-		} catch (IOException e) { e.printStackTrace(); }
+			stdInput.close();
+		} 
+		
+		catch (IOException e) { e.printStackTrace(); }
 		
 		return tileMove;
 		

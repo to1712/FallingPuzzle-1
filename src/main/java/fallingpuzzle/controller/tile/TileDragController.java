@@ -61,7 +61,7 @@ public class TileDragController extends DragController {
         		
                 target.setTranslateX( 0 );
                 
-                GameController gameController = ( ( Row )tile.getParent() ).getGameController();
+                GameController gameController = ( row ).getGameController();
                 
         		if( deltaIndex != 0 )
         			gameController.moveTile( ( Tile ) target, oldIndex );

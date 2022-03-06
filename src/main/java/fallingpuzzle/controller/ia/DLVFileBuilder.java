@@ -40,7 +40,7 @@ public class DLVFileBuilder {
 			sb.append( convertRowIntoRules( row, i ) );
 		}
 		
-		sb.append( createIndexes() ); //indexes
+		sb.append( createIndexes( rows.size() - 1 ) ); //indexes
 		
 		//RULES
 		sb.append( createTileMoveRule() ); //guess
@@ -71,8 +71,8 @@ public class DLVFileBuilder {
 	}
 	
 	//Create indexes
-	private String createIndexes() {
-		return "\n" + "index(0..7).";
+	private String createIndexes( int size) {
+		return "\n" + "index(0.." + size + ").";
 	}
 	
 	//Create tileSize rule - tileSize( firstIndex, #indexes, row )
@@ -128,6 +128,7 @@ public class DLVFileBuilder {
 	}
 	
 	//create query tileMove( X, Y, R )?
+	@SuppressWarnings("unused")
 	private String createQuery() {
 		return "\n" + "tileMove( X, Y, R )?";
 	}

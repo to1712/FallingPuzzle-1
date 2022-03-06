@@ -3,7 +3,6 @@ package fallingpuzzle.model;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-
 import fallingpuzzle.controller.scene.GameController;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -34,19 +33,20 @@ public class Row extends Pane {
 		return false;
 	}
 	
-	public void setParent( VBox parent ) {
-		parent.getChildren().add( this );
+	public void fitToParent() {
+		VBox parent = ( VBox ) this.getParent();
 		this.setMinWidth( parent.getWidth() );
 		this.setMaxWidth( parent.getWidth() );
 		this.setMaxHeight( parent.getHeight() / 10 );
 		this.setMinHeight( parent.getHeight() / 10  );
 		this.setWidth( parent.getWidth() );
 		this.setHeight( parent.getHeight() / 10 );
-		for( int i = 0; i< getChildren().size(); ++i ) {
-			Tile tile = ( Tile ) getChildren().get( i );
+		
+		for( int i = 0; i < getChildren().size(); ++i ) {
+			Tile tile = ( Tile ) getChildren().get( i );;
 			tile.updateTileSize( this.getWidth() / 8, this.getHeight() );
 		}
-		updateTilesCoords();
+
 	}
 	
 	/* Only inserts tiles which can fit inside this row */

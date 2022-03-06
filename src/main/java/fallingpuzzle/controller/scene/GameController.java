@@ -19,6 +19,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Pair;
@@ -40,9 +41,9 @@ public class GameController extends Controller {
     @FXML
     private MenuItem mniRowUp;
     @FXML
-    private RadioMenuItem rmiRunAi;  
-    @FXML
     private Label lblScore;
+    @FXML
+    private ToggleButton tbnAiSwitch;
     
     
     public static Scene getScene() {
@@ -84,6 +85,10 @@ public class GameController extends Controller {
 		selectedTile.setY( selectedTile.getY() + 1 );	
     }
     
+    public void notReady() {
+    	isReady.set( false );
+    }
+    
     public boolean isReady() {
     	return isReady.get();
     }
@@ -93,20 +98,20 @@ public class GameController extends Controller {
 		dlvFileBuilder.createFile( rows );
 		File file = dlvFileBuilder.getFile();
 		Pair<Tile, Integer> tileMove = dlvController.start( file );
-		moveTile( tileMove.getKey(), tileMove.getValue() );
+		if( tileMove != null )
+			moveTile( tileMove.getKey(), tileMove.getValue() );
 		file.delete();
+    	isReady.set( true );
     }
 
         
     public void moveTile( Tile tile, int index ) {
-    	isReady.set( false );
     	Row row = ( Row ) tile.getParent();
     	if( row.moveTile( tile, index ) ) {
 			update();
 			genRow();
 			update();
     	}
-    	isReady.set( true );
     }
     
     private void reset() {
@@ -119,7 +124,7 @@ public class GameController extends Controller {
     public void initialize() {
     	rows = vboRows.getChildren();
     	dlvController = new DLVController( this );
-		AiCycle = new AIService( rmiRunAi, this );
+		AiCycle = new AIService( tbnAiSwitch, this );
     	
     	rowUp = event -> {  
     		genRow(); 
@@ -128,16 +133,18 @@ public class GameController extends Controller {
     	mniRowUp.setOnAction( rowUp ); 
 
     	iASwitch = event -> {
-    		if( !rmiRunAi.isSelected() ) {
+    		if( !tbnAiSwitch.isSelected() ) {
+    			tbnAiSwitch.setText( "AI OFF" );
     			mniRowUp.setDisable( false );
     			mniInitBoard.setDisable( false );
     			return;
     		}
+			tbnAiSwitch.setText( "AI ON" );
     		AiCycle.restart();
 			mniRowUp.setDisable( true );
 			mniInitBoard.setDisable( true );
     	};
-    	rmiRunAi.setOnAction( iASwitch );
+    	tbnAiSwitch.setOnAction( iASwitch );
     	
     	initBoard = event -> { while( vboRows.getChildren().size() < 4 ) { genRow(); } };
     	mniInitBoard.setOnAction( initBoard );
@@ -155,34 +162,34 @@ public class GameController extends Controller {
 		//shift upper row to game vbox
 		if( vboNextRow.getChildren().size() > 1 ) {
 			Row row1 = ( Row ) vboNextRow.getChildren().get( 0 );
-			row1.setParent( vboRows );
+			vboNextRow.getChildren().remove( row1 );
+			vboRows.getChildren().add( row1 );
+			row1.fitToParent();
 			//add some features to tails
 			for( int i = 0; i < row1.getChildren().size(); ++i ) { 
 				Tile tile = ( Tile ) row1.getChildren().get( i ); 
 				tile.setSelectable( true ); 
 				tile.setDraggable( true ); 
 			}	
-			vboNextRow.getChildren().remove( row1 );
+			
+			
 		}
 		
 		//GameOver
 		if( vboRows.getChildren().size() > 10 ) {
 			System.out.println("GAME OVER");
 			reset();
+			mniInitBoard.fire();
 		}
     }
-    
-    public void update() {
-		checkFall();
-	}
-	
+    	
 	
 	/* MAIN ALGORITHM */
 	// 1 - while -> check each row for falling tiles ( starting from bottom ) returns true
 	// 2 - if -> check for a full row ( starting from bottom )
 	// 2a true -> remove it then go to step 1
 	// 2b false -> end
-	public void checkFall() {
+	public void update() {
 		
 		int score = 0;
 		
@@ -222,7 +229,8 @@ public class GameController extends Controller {
 	private Row createRow() {
 		Row row = new Row();
 		row.setController( this );
-		row.setParent( vboNextRow );
+		vboNextRow.getChildren().add( row );
+		row.fitToParent();
 		TileGenerator tg = new TileGenerator();
 		tg.genTiles( row );
 		return row;

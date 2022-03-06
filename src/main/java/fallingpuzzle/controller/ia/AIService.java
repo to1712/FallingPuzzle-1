@@ -4,15 +4,15 @@ import fallingpuzzle.controller.scene.GameController;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.ToggleButton;
 
 public class AIService extends Service<Void> {
 	
-	RadioMenuItem rmiRunAi;
+	ToggleButton tbnAiSwitch;
 	GameController gameController;
 	
-	public AIService( RadioMenuItem rmiRunAi, GameController gameController ) {
-		this.rmiRunAi = rmiRunAi;
+	public AIService( ToggleButton tbnAiSwitch, GameController gameController ) {
+		this.tbnAiSwitch = tbnAiSwitch;
 		this.gameController = gameController;
 	}
 	
@@ -23,10 +23,11 @@ public class AIService extends Service<Void> {
 			@Override
 			protected Void call() throws Exception {
 				System.out.println("AI RUNNING:");
-				while( rmiRunAi.isSelected() ) {
+				while( tbnAiSwitch.isSelected() ) {
 					if( !gameController.isReady() ) continue;
+				gameController.notReady();
 				Platform.runLater( () -> { gameController.genDLVFile(); } );
-					Thread.sleep( 1000 );
+					Thread.sleep( 500 );
 				}
 				System.out.println("AI STOP");
 				return null;
