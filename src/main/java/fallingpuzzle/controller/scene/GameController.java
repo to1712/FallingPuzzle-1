@@ -85,6 +85,7 @@ public class GameController extends Controller {
 		selectedTile.setY( selectedTile.getY() + 1 );	
     }
     
+    //THREADS STUFF
     public void notReady() {
     	isReady.set( false );
     }
@@ -93,6 +94,7 @@ public class GameController extends Controller {
     	return isReady.get();
     }
     
+    //IA STUFF
     public void genDLVFile() {
 		DLVFileBuilder dlvFileBuilder = new DLVFileBuilder();
 		dlvFileBuilder.createFile( rows );
@@ -147,6 +149,7 @@ public class GameController extends Controller {
     	tbnAiSwitch.setOnAction( iASwitch );
     	
     	initBoard = event -> { while( vboRows.getChildren().size() < 4 ) { genRow(); } };
+    	lblScore.setText( "0" );
     	mniInitBoard.setOnAction( initBoard );
 
     }
@@ -163,8 +166,10 @@ public class GameController extends Controller {
 		if( vboNextRow.getChildren().size() > 1 ) {
 			Row row1 = ( Row ) vboNextRow.getChildren().get( 0 );
 			vboNextRow.getChildren().remove( row1 );
-			vboRows.getChildren().add( row1 );
-			row1.fitToParent();
+			vboRows.getChildren().add( row1 );			
+			
+			row1.fitToParent(); //TODO ISSUES HERE Out Of Bounds somehow
+			
 			//add some features to tails
 			for( int i = 0; i < row1.getChildren().size(); ++i ) { 
 				Tile tile = ( Tile ) row1.getChildren().get( i ); 

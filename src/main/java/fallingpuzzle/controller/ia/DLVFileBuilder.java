@@ -94,35 +94,39 @@ public class DLVFileBuilder {
 	private String createTileMoveRule() {
 		return "\n" + "tileMove( X, Y, R ) | nTileMove( X, Y, R ) :-"
 				+ " tile( X, _, R ),"
-				+ " index( X ),"
 				+ " index( Y ),"
 				+ " X != Y.";
-				/*
-				+ " occupiedIndexesRow( I, R ),"
-				+ " tileSize( X, S, R ),"
-				+ "	K = Y + S,"
-				+ " I < Y,"
-				+ " I > K.";
-				*/
 	}
 		
 	//Create strong constraints
 	private String createStrongConstraints() {
 		StringBuilder sb = new StringBuilder();
-		sb.append( "\n" + "nTileMoves( S ):- #count{ X, Y, R : tileMove( X, Y, R ) } = S." );
+		sb.append( "\n" + "nTileMoves( S ) :- #count{ X, Y, R : tileMove( X, Y, R ) } = S." );
 		sb.append( "\n" + ":- nTileMoves( S ), S != 1." ); //shall be 1 move
 		
-		sb.append( "\n" + ":- tileMove( X, Y, R )," //no tiles in between oldIndex and newIndex 
+		sb.append( "\n" + ":- tileMove( X, Y, R )," //no tiles already there
+				+ " tile( Z, Y, R )." );
+
+		sb.append( "\n" + ":- tileMove( X, Y, R )," //no tiles in between <- left
+				+ " tile( Z, K, R ),"
+				+ " K > Y,"
+				+ " K < X,"
+				+ " Y < X." );
+		
+		sb.append( "\n" + ":- tileMove( X, Y, R )," //no tiles in between -> right
+				+ " tile( Z, K, R ),"
+				+ " K < Y,"
+				+ " K > X,"
+				+ " Y > X." );
+		
+		sb.append( "\n" + ":- tileMove( X, Y, R )," //no tiles colliding -> right
 				+ " tile( Z, K, R ),"
 				+ " tileSize( X, S, R ),"
-				+ " Z != X,"
-				+ " M = Y + S,"
-				+ " K > X,"
-				+ " K < M."); 
-		
-		sb.append( "\n" + ":- tileMove( X, Y, R ),"
-						+ " tile( Y, _, R )." );
-		
+				+ " L = Y + S,"
+				+ " K > Y,"
+				+ " K < L,"
+				+ " Y > X." );
+				
 		
 		return sb.toString();
 	}

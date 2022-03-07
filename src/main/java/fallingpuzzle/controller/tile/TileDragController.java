@@ -47,7 +47,7 @@ public class TileDragController extends DragController {
             	Row row = ( Row ) tile.getParent();
             	int oldIndex = tile.getFirstIndex();
             	int deltaIndex = 0;
-            	
+            	            	
         		if( absTranslate >= 35 && absTranslate < 106 ) deltaIndex += 1;
         		else if( absTranslate >= 106 && absTranslate < 177 ) deltaIndex += 2;
         		else if( absTranslate >= 177 && absTranslate < 248 ) deltaIndex += 3;

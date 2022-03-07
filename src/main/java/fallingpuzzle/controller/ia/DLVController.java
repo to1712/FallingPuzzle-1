@@ -22,7 +22,8 @@ public class DLVController {
 	public Pair<Tile, Integer> start( File file ) {
 		Pair<Tile, Integer> tileMove = null;
 		Runtime rt = Runtime.getRuntime();
-		String[] commands = { SettingsDAO.getById( "DLV_PATH" ).getValue(), "--no-facts", file.getAbsolutePath() };
+		// "--no-facts"
+		String[] commands = { SettingsDAO.getById( "DLV_PATH" ).getValue(), file.getAbsolutePath() };
 		Process proc;
 		try {
 			proc = rt.exec(commands);
@@ -44,6 +45,7 @@ public class DLVController {
 	private Pair<Tile, Integer> processOutput( BufferedReader stdInput ) throws IOException {
 		
 		String s = null;
+		String s1 = null;
 		
 		Pair<Tile, Integer> tileMove = null;
 		
@@ -52,9 +54,14 @@ public class DLVController {
 			if( counter++ < 2 ) continue;
 	//		System.out.println( s );
 
-			if( !s.contains( "tileMove" ) ) return null;
+			if( !s.contains( "tileMove" ) ) {
+				System.out.println( s );
+				return null;
+			}
 			//tileMove( firstIndex, newIndex, row );
 			s = s.strip();
+			s1 = s.replaceAll("(nTileMove\\(\\d+\\,\\d+\\,\\d+\\)\\,)+", "1" );
+			System.out.println( s1 );
 			
 			
 			int firstIndex = 0, newIndex = 0, rowIndex = 0;

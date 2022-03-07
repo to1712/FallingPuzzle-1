@@ -43,7 +43,7 @@ public class Row extends Pane {
 		this.setHeight( parent.getHeight() / 10 );
 		
 		for( int i = 0; i < getChildren().size(); ++i ) {
-			Tile tile = ( Tile ) getChildren().get( i );;
+			Tile tile = ( Tile ) getChildren().get( i );
 			tile.updateTileSize( this.getWidth() / 8, this.getHeight() );
 		}
 
