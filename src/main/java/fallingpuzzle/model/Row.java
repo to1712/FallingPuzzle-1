@@ -46,6 +46,8 @@ public class Row extends Pane {
 			Tile tile = ( Tile ) getChildren().get( i );
 			tile.updateTileSize( this.getWidth() / 8, this.getHeight() );
 		}
+		
+	//	System.out.println( this.getWidth() / 8 );
 
 	}
 	

@@ -20,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Pair;
@@ -128,6 +129,8 @@ public class GameController extends Controller {
     	dlvController = new DLVController( this );
 		AiCycle = new AIService( tbnAiSwitch, this );
     	
+		cnvGameBG.getGraphicsContext2D().drawImage( new Image( this.getClass().getResourceAsStream( "/images/bg4.png" ) ), 0, 0 );
+		
     	rowUp = event -> {  
     		genRow(); 
     		update(); 
